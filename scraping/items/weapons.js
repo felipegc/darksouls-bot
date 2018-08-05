@@ -18,7 +18,7 @@ let extractWeaponList = () => {
                 let link = weaponList[i].getElementsByClassName('wiki_link')[0].href;
                 weaponLinks.push(urlWiki + link);
             } catch (err) {
-                console.log('Unable to extract link: ', err);
+                console.log('Unable to extract link: ', err.message);
             }
         }
             return weaponLinks;
@@ -28,13 +28,23 @@ let extractWeaponList = () => {
 };
 
 extractWeaponList().then((response) => {
-    for (let i=0; i<response.length; i++) {
-        console.log(response[i]);
-        let link = response[i];
-        let itemName = response[i].split(urlWiki + '/')[1].replace(/[\W_]+/g, '');
+    let files = [];
 
-        infoExtractor.extractInfoTable(response[i], itemName);
+    files = response.map(element => {
+        return {
+            linkToScrap: element,
+            item: element.split(urlWiki + '/')[1].replace(/[\W_]+/g, '')
+        };
+    });
+
+    let batchFiles = []
+    for(let i; i < 20; i++) {
+        batchFiles.push(files[i]);
     }
+
+    return infoExtractor.generateInfoTables('./database/weapons', 'table', batchFiles);
+}).then(response => {
+    console.log(response);
 }).catch(err => console.log(err));
 
 
