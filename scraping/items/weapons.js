@@ -37,12 +37,12 @@ extractWeaponList().then((response) => {
         };
     });
 
-    let batch = [];
-    for (let i = 0; i < 1; i++) {
-        batch[i] = files[i];
-    }
+    // let batch = [];
+    // for (let i = 0; i < 1; i++) {
+    //     batch[i] = files[i];
+    // }
 
-    return infoExtractor.batchGenerateInfoTables('./database/weapons', 'table', batch);
+    return infoExtractor.batchGenerateInfoTables('./database/weapons', 'table', files);
 }).then(response => {
     console.log(response);
 }).catch(err => console.log(err));
