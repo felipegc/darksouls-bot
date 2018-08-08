@@ -29,7 +29,7 @@ const generateInfoTables = async (pathToSave, selector, item, linkToScrap) => {
         });
 
         await page.screenshot({
-            path: `${pathToSave}/${item}.jpeg`,
+            path: `${pathToSave}/${item}.png`,
             clip: {
                 x: rect.left,
                 y: rect.top,
