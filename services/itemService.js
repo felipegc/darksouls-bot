@@ -11,7 +11,12 @@ const findItem = (item) => {
 };
 
 const findCommandItem = (commandItem) => {
-    let item = commandItem.replace('/', '');
+    let item = commandItem;
+
+    if (commandItem.charAt(0) === '/') {
+        item = commandItem.replace('/', '');
+    }
+
     return new Promise((resolve, reject) => {
         dao.fetchItem(item).then(response => {
             resolve(`./database/weapons/${response}`);

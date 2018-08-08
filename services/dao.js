@@ -1,19 +1,24 @@
 const fs = require('fs');
 
-
 let fetchItem = (item) => {
     return new Promise((resolve, reject) => {
         let files = fs.readdirSync('./database/weapons/');
-        let convertedFiles = files.map(el => {return el.toLowerCase()});
-        let element = convertedFiles.find(el => el === item.toLowerCase()+'.png');
+        let re = new RegExp(' ', 'g');
+        let lowerCaseItem = item.replace(re, '').toLowerCase() + '.png';
+        let element = files.find(el => {return el.toLowerCase() === lowerCaseItem});
 
         if (element === undefined) {
             reject('Item Not Found');
         }
 
-        resolve(`${item}.png`);
+        resolve(`${element}`);
     })
 };
+
+fetchItem('Titanite Catch Pole').then(response => {
+    console.log(response);
+}).catch(err => {console.log(err)});
+
 
 let fetchWeapons = () => {
     return new Promise((resolve, reject) => {
