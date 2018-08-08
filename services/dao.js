@@ -15,11 +15,6 @@ let fetchItem = (item) => {
     })
 };
 
-fetchItem('Titanite Catch Pole').then(response => {
-    console.log(response);
-}).catch(err => {console.log(err)});
-
-
 let fetchWeapons = () => {
     return new Promise((resolve, reject) => {
         let files = fs.readdirSync('./database/weapons/');

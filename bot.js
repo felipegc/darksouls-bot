@@ -6,6 +6,12 @@ const itemService = require('./services/itemService');
 // Create a bot using TOKEN provided as environment variable
 const bot = new Telegraf('631807407:AAEzPnUTpZ5emqrEVZpWgSSxBVtIhoIxm-Q');
 
+bot.command('help', ctx => {
+    console.log(JSON.stringify(ctx.message));
+    let help = 'Type the command /items to let Black Knight guide you';
+    ctx.replyWithHTML('Type the command <b>/items</b> to let Black Knight guide you or type whatever you are looking for.');
+});
+
 bot.command('items', ctx => {
     console.log(JSON.stringify(ctx.message));
 
@@ -22,7 +28,7 @@ bot.command('weapons', ctx => {
     console.log(JSON.stringify(ctx.message));
 
     itemService.buildWeaponsList().then(response => {
-        let availableWeapons = 'Type one of the following weapons:\n\n' + response;
+        let availableWeapons = 'Select one of the following weapons:\n\n' + response;
         ctx.reply(availableWeapons);
     }).catch(err => {
         console.log(err);
