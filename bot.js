@@ -33,7 +33,7 @@ bot.command('weapons', ctx => {
 bot.on('text', (ctx) => {
     console.log(JSON.stringify(ctx.message));
 
-    itemService.findItem(ctx.message.text).then(response => {
+    itemService.findCommandItem(ctx.message.text).then(response => {
         ctx.replyWithPhoto({ source: fs.readFileSync(response)});
     }).catch(err => {
         console.log(err);

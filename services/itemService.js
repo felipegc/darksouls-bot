@@ -10,6 +10,17 @@ const findItem = (item) => {
     });
 };
 
+const findCommandItem = (commandItem) => {
+    let item = commandItem.replace('/', '');
+    return new Promise((resolve, reject) => {
+        dao.fetchItem(item).then(response => {
+            resolve(`./database/weapons/${response}`);
+        }).catch(err => {
+            reject(err);
+        });
+    });
+};
+
 const buildCategories = () => {
     return new Promise((resolve, reject) => {
         dao.fetchCategories().then(response => {
@@ -26,7 +37,7 @@ const buildWeaponsList = () => {
         dao.fetchWeapons().then(weapons => {
             let weaponsList = '';
             for (let i = 0; i < weapons.length; i ++) {
-                weaponsList += `${i + 1} - ${weapons[i]}\n`;
+                weaponsList += `/${weapons[i]}\n`;
             }
             resolve(weaponsList);
         }).catch(err => {
@@ -42,5 +53,6 @@ const buildWeaponsList = () => {
 module.exports = {
     findItem,
     buildCategories,
-    buildWeaponsList
+    buildWeaponsList,
+    findCommandItem
 };
